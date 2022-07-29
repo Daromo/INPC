@@ -1,6 +1,7 @@
 '''
     # author: DANIEL
     # Servicios que se necesitan para actualizar e informar el valor del INPC
+    # date: 03/05/2021
     # pip install python-decouple
 '''
 from decouple import config

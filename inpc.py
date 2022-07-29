@@ -1,7 +1,7 @@
 '''
-    # author: DANIEL
+    # author: JOSE DANIEL
     # Script para obtener e informar el valor del INPC actual
-    #
+    # date: 03/05/2021
 '''
 import Service
 import requests
@@ -36,7 +36,7 @@ def getINPC():
         stringTemp = stringTemp.replace('</strong>,','')
         listINPC = stringTemp.split(',')
 
-        # sacamos el valor 2021
+        # sacamos el valor 2022
         listINPC.pop(0)
 
         datos = ['null'] * 12
@@ -45,18 +45,20 @@ def getINPC():
             datos[flag] = INPC
             flag+=1
 
-        df = pd.DataFrame([datos],index=['2021'], columns = [meses])
+        df = pd.DataFrame([datos],index=['2022'], columns = [meses])
         return df
     except:
         print('Hubo un error al intentar conectarse con el servidor')
         return 504
 
 # EVALUACION
-if numeroDia <= 28:
+if numeroDia <= 15:
     dfINPC = getINPC()
+    print('Obtener valor del INPC')
+    print(dfINPC)
     if isinstance(dfINPC, pd.DataFrame):
         nombreMesINPC = meses[numeroMes-2]
-        currentINPC = dfINPC.loc['2021', nombreMesINPC]
+        currentINPC = dfINPC.loc['2022', nombreMesINPC]
         if currentINPC.iloc[0] != 'null':
             #IF VERIFICAR SI EL EMAIL YA SE HA ENVIADO
             if Service.status_correo() != 'enviado':
@@ -67,4 +69,4 @@ if numeroDia <= 28:
             print('VALOR INPC NO ACTUALIZADO')
 else:
     Service.escribir_contenido_txt('no enviado')
-    print('INPC ACTUALIZADO'+'\n'+'BUEN DIA CRACK c:')
+    print('INPC ACTUALIZADO'+'\n'+'BUEN DIA c:')
